@@ -20,5 +20,12 @@ public class Player : MonoBehaviour
     {
         move= Input.GetAxisRaw("Horizontal");
         rb2D.linearVelocity =new Vector2(move*speed, rb2D.linearVelocity.y);
+
+        if (move != 0){
+            transform.localScale = new Vector3(Mathf.Sign(move),1,1);
+        }
+            
+        
+    
     }
 }
