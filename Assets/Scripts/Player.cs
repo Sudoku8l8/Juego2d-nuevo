@@ -8,6 +8,12 @@ public class Player : MonoBehaviour
 
     private float  move;
 
+    public float jumpForce = 4;
+    private bool isGrounded;
+    public Transform groundCheck;
+    public float groundRadius = 0.1f;
+    public LayerMask groundLayer;
+
 
     void Start()
     {
@@ -25,7 +31,14 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Sign(move),1,1);
         }
             
-        
+        if (Input.GetButtonDown("Jump") && isGrounded){
+            rb2D.linearVelocity= new Vector2(rb2D.linearVelocity.x,jumpForce);
+
+        }
     
     }
+
+    private void FixedUpdate(){
+            isGrounded= Physics2D.OverlapCircle(groundCheck.position,groundRadius, groundLayer);
+        }
 }
