@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+
 public class Player : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,6 +20,9 @@ public class Player : MonoBehaviour
     private int coins;
     public TMP_Text textCoins;
 
+    public AudioSource audioSource;
+    public AudioClip coinClip;
+    public AudioClip barrelClip;
 
     void Start()
     {
@@ -53,6 +57,7 @@ public class Player : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision){
         if(collision.transform.CompareTag("Coin")){
+            audioSource.PlayOneShot(coinClip);
             Destroy(collision.gameObject);
             coins++;
             textCoins.text= coins.ToString();
@@ -64,6 +69,7 @@ public class Player : MonoBehaviour
         }
 
         if(collision.transform.CompareTag("Barrel")){
+            audioSource.PlayOneShot(barrelClip);
             Vector2 knockbackDir=(rb2D.position-(Vector2)collision.transform.position).normalized;
             rb2D.linearVelocity= Vector2.zero;
             rb2D.AddForce(knockbackDir*3, ForceMode2D.Impulse);
@@ -76,7 +82,7 @@ public class Player : MonoBehaviour
 
             collision.GetComponent<Animator>().enabled=true;
             Destroy(collision.gameObject, 0.5f);
-            
+
 
         }
 
